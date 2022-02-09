@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2020",
+    "module": "ES2020",
+    "declaration": true,
+    "declarationDir": "build/types",
+    "outDir": "build",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true
+  }
+}

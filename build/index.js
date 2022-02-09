@@ -1,0 +1,1 @@
+import{watch as t}from"vue";export default function e(e,o,n=1e3,r=(()=>{})){let u,a=0;const c=()=>{u&&clearTimeout(u)};return t(e,(async(t,e)=>{r(t,e);const i=()=>(c(),a=Date.now(),o(t,e)),m=Date.now()-a;m>=n?i():(c(),u=setTimeout(i,n-m))}))}

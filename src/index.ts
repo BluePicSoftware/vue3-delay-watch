@@ -1,6 +1,6 @@
-import { watch } from 'vue'
+import { watch, WatchSource } from 'vue'
 
-export default function delayWatch(watchRef: (watchRef: any) => void, callback: (newState: any, oldState: any) => void, interval = 1000, syncCallback: (newState: any, oldState: any) => void = () => {}): ReturnType<typeof watch> {
+export default function delayWatch<T>(watchRef: (watchRef: WatchSource) => void, callback: (newState: T, oldState: T) => void, interval = 1000, syncCallback: ((newState: T, oldState: T) => void)|undefined): ReturnType<typeof watch> {
   // Stores the last update time
   let lastUpdateTime = 0;
   // timeout timer will be stored here to destroy if newer changes get recognized before timer ends
@@ -10,8 +10,9 @@ export default function delayWatch(watchRef: (watchRef: any) => void, callback: 
   const killTimer = () => { if (changeTimer) clearTimeout(changeTimer); }
 
   // Watch listener
-  return watch(watchRef, async (newState: any, oldState: any) => {
-    syncCallback(newState, oldState);
+  // @ts-expect-error dont know
+  return watch(watchRef, async (newState: T, oldState: T) => {
+    if (syncCallback) syncCallback(newState, oldState);
 
     // Trigger a real update
     const update = () => {
